@@ -1,0 +1,162 @@
+### Task 1: List all events (predict 200)
+GET http://localhost:3000/api/events
+
+### Task 1: Search events (predict 200)
+GET http://localhost:3000/api/events?q=game
+
+### Task 1: Get event 2 (predict 200)
+GET http://localhost:3000/api/events/2
+
+### Task 1: Get missing event 999 (predict 404)
+GET http://localhost:3000/api/events/999
+
+### Task 1: Create event 4 (predict 201)
+POST http://localhost:3000/api/events
+Content-Type: application/json
+
+{
+  "title": "Pierogi workshop",
+  "date": "2026-12-03T17:00",
+  "location": "Student kitchen",
+  "capacity": 15
+}
+
+### Task 1: Invalid event (predict 400)
+POST http://localhost:3000/api/events
+Content-Type: application/json
+
+{ "title": "x", "date": "tomorrow", "capacity": -5 }
+
+### Task 1: Update event 4 (predict 200)
+PUT http://localhost:3000/api/events/4
+Content-Type: application/json
+
+{
+  "title": "Pierogi workshop",
+  "date": "2026-12-03T17:00",
+  "location": "Student kitchen",
+  "capacity": 20
+}
+
+### Task 1: Confirm event 4 still exists before restarting (predict 200)
+GET http://localhost:3000/api/events/4
+
+### Task 1: Restart the server, then check event 4 (predict 404)
+GET http://localhost:3000/api/events/4
+
+### Task 1: Create event 4 again after the restart, for the delete test (predict 201)
+POST http://localhost:3000/api/events
+Content-Type: application/json
+
+{
+  "title": "Pierogi workshop",
+  "date": "2026-12-03T17:00",
+  "location": "Student kitchen",
+  "capacity": 15
+}
+
+### Task 1: Delete event 4 (predict 204)
+DELETE http://localhost:3000/api/events/4
+
+### Task 1: Delete missing event 999 (predict 404)
+DELETE http://localhost:3000/api/events/999
+
+### Task 2: Statistics for the initial events (predict count 3, capacity 190)
+GET http://localhost:3000/api/stats
+
+### Task 2: Delete all three initial events to check the empty result
+DELETE http://localhost:3000/api/events/1
+
+### Delete initial event 2
+DELETE http://localhost:3000/api/events/2
+
+### Delete initial event 3
+DELETE http://localhost:3000/api/events/3
+
+### Task 2: Statistics with no events (predict count 0, capacity 0, nextEvent null)
+GET http://localhost:3000/api/stats
+
+### Task 2: Create a future event to demonstrate nextEvent
+POST http://localhost:3000/api/events
+Content-Type: application/json
+
+{
+  "title": "Future event example",
+  "date": "2026-12-04T17:00",
+  "location": "Lab 204",
+  "capacity": 10
+}
+
+### Task 2: Statistics should now contain the future event
+GET http://localhost:3000/api/stats
+
+### Task 3: Past date should return 400
+POST http://localhost:3000/api/events
+Content-Type: application/json
+
+{
+  "title": "Past event",
+  "date": "2020-01-01T10:00",
+  "location": "Lab",
+  "capacity": 10
+}
+
+### Task 3: Title of 121 characters should return 400
+POST http://localhost:3000/api/events
+Content-Type: application/json
+
+{
+  "title": "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+  "date": "2026-12-03T17:00",
+  "location": "Student kitchen",
+  "capacity": 15
+}
+
+### Task 3: Location of 101 characters should return 400
+POST http://localhost:3000/api/events
+Content-Type: application/json
+
+{
+  "title": "Location test",
+  "date": "2026-12-03T17:00",
+  "location": "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL",
+  "capacity": 15
+}
+
+### Task 3: Description of 1001 characters should return 400
+POST http://localhost:3000/api/events
+Content-Type: application/json
+
+{
+  "title": "Description test",
+  "date": "2026-12-03T17:00",
+  "location": "Student kitchen",
+  "description": "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD",
+  "capacity": 15
+}
+
+### Task 3: Two broken rules; title is checked before date
+POST http://localhost:3000/api/events
+Content-Type: application/json
+
+{
+  "title": "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM",
+  "date": "2020-01-01T10:00",
+  "location": "Lab",
+  "capacity": 10
+}
+
+### Task 4: Filter events from November 1
+GET http://localhost:3000/api/events?from=2026-11-01
+
+### Task 4: Sort events by title
+GET http://localhost:3000/api/events?sort=title
+
+### Task 4: Combine search and title sorting
+GET http://localhost:3000/api/events?q=night&sort=title
+
+### Task 4: Combine search, date filter, and title sorting
+GET http://localhost:3000/api/events?q=night&from=2026-10-01&sort=title
+
+### Task 4: Invalid from date (current implementation returns 200 and an empty array)
+GET http://localhost:3000/api/events?from=yesterday

@@ -1,33 +1,39 @@
-
 # Campus Events
 
-Campus Events is a full-stack web application that allows university students to browse events, register for them and create their own events.
+A learning project for building a Campus Events application with Angular and an Express API.
 
-## Technologies
+## Project status
 
-- Node.js
-- Angular
-- TypeScript
-- JavaScript
+- The Express API manages campus events in memory.
+- Events can be listed, searched by title, filtered by start date, sorted by date or title, created, updated, and deleted.
+- `GET /api/stats` reports the event count, total capacity, and earliest future event.
+- Event input is validated on the server. Requests are logged after their responses finish.
+- The Angular client is currently a starter interface with the Lab 01 counter; it is not yet connected to the events API.
 
-## Running the backend
+## Run the API
 
-1. Open a terminal.
-2. Navigate to the `server` folder.
-3. Run `node hello.js`.
-4. Open http://localhost:3000.
+From a terminal:
 
-## Running the frontend
+```sh
+cd server
+npm install
+npm run dev
+```
 
-1. Open another terminal.
-2. Navigate to the `client` folder.
-3. Run `npm install` if necessary.
-4. Run `ng serve`.
-5. Open http://localhost:4200.
+The API listens at `http://localhost:3000`. The development command restarts the server when source files change. Events are stored only in memory, so restarting resets them to the initial sample events.
 
-## Current features
+## Try the requests
 
-- Node.js server with routes and JSON responses.
-- Angular application with Campus Events title.
-- Interactive counter with reset functionality.
-- Conditional message after more than five clicks.
+Open `server/requests.http` in Visual Studio Code with a REST client extension and send the requests individually. Some requests depend on earlier ones. Follow the comments in the file, including the point where the server must be restarted.
+
+## Run the Angular starter client
+
+In a second terminal:
+
+```sh
+cd client
+npm install
+npm start
+```
+
+The client is served at `http://localhost:4200`.

@@ -3,3 +3,4 @@ dist/
 .angular/
 *.db
 .env
+server/campus-events/
